@@ -14,8 +14,11 @@
 #include "crn_mipmapped_texture.h"
 #include "crn_buffer_stream.h"
 
-#define STBI_HEADER_FILE_ONLY
-#include "crn_stb_image.cpp"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 
 #include "crn_jpgd.h"
 
