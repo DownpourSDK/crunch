@@ -45,9 +45,6 @@ namespace crnlib
          case cCRNDXTCompressorCRN:    return "CRN";
          case cCRNDXTCompressorCRNF:   return "CRNF";
          case cCRNDXTCompressorRYG:    return "RYG";
-#if CRNLIB_SUPPORT_ATI_COMPRESS
-         case cCRNDXTCompressorATI:  return "ATI";
-#endif
          default: break;
       }
       CRNLIB_ASSERT(false);

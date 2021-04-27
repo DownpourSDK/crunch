@@ -6,7 +6,6 @@
 #include "crn_zeng.h"
 #include "crn_checksum.h"
 
-#define CRNLIB_CREATE_DEBUG_IMAGES 0
 #define CRNLIB_ENABLE_DEBUG_MESSAGES 0
 
 namespace crnlib
@@ -210,11 +209,6 @@ namespace crnlib
       hist[0].resize(32);
       hist[1].resize(64);
 
-#if CRNLIB_CREATE_DEBUG_IMAGES
-      image_u8 endpoint_image(2, m_hvq.get_color_endpoint_codebook_size());
-      image_u8 endpoint_residual_image(2, m_hvq.get_color_endpoint_codebook_size());
-#endif
-
       crnlib::vector<uint> residual_syms;
       residual_syms.reserve(m_hvq.get_color_endpoint_codebook_size()*2*3);
 
@@ -232,11 +226,6 @@ namespace crnlib
          cur[0] = dxt1_block::unpack_color((uint16)(endpoint & 0xFFFF), false);
          cur[1] = dxt1_block::unpack_color((uint16)((endpoint >> 16) & 0xFFFF), false);
 
-#if CRNLIB_CREATE_DEBUG_IMAGES
-         endpoint_image(0, endpoint_index) = dxt1_block::unpack_color((uint16)(endpoint & 0xFFFF), true);
-         endpoint_image(1, endpoint_index) = dxt1_block::unpack_color((uint16)((endpoint >> 16) & 0xFFFF), true);
-#endif
-
          for (uint j = 0; j < 2; j++)
          {
             for (uint k = 0; k < 3; k++)
@@ -251,20 +240,12 @@ namespace crnlib
 
                residual_syms.push_back(sym);
 
-#if CRNLIB_CREATE_DEBUG_IMAGES
-               endpoint_residual_image(j, endpoint_index)[k] = static_cast<uint8>(sym);
-#endif
             }
          }
 
          prev[0] = cur[0];
          prev[1] = cur[1];
       }
-
-#if CRNLIB_ENABLE_DEBUG_MESSAGES
-      if (m_pParams->m_flags & cCRNCompFlagDebugging)
-         console::debug("Total endpoint residuals: %i", total_residuals);
-#endif
 
       if (endpoint_indices.size() > 1)
       {
@@ -283,11 +264,6 @@ namespace crnlib
             console::debug("Total endpoint index delta: " CRNLIB_INT64_FORMAT_SPECIFIER, total_delta);
 #endif
       }
-
-#if CRNLIB_CREATE_DEBUG_IMAGES
-      image_utils::write_to_file(dynamic_string(cVarArg, "color_endpoint_residuals_%u.tga", trial_index).get_ptr(), endpoint_residual_image);
-      image_utils::write_to_file(dynamic_string(cVarArg, "color_endpoints_%u.tga", trial_index).get_ptr(), endpoint_image);
-#endif
 
       static_huffman_data_model residual_dm[2];
 
@@ -362,11 +338,6 @@ namespace crnlib
       symbol_histogram hist;
       hist.resize(256);
 
-#if CRNLIB_CREATE_DEBUG_IMAGES
-      image_u8 endpoint_image(2, m_hvq.get_alpha_endpoint_codebook_size());
-      image_u8 endpoint_residual_image(2, m_hvq.get_alpha_endpoint_codebook_size());
-#endif
-
       crnlib::vector<uint> residual_syms;
       residual_syms.reserve(m_hvq.get_alpha_endpoint_codebook_size()*2*3);
 
@@ -383,11 +354,6 @@ namespace crnlib
          cur[0] = dxt5_block::unpack_endpoint(endpoint, 0);
          cur[1] = dxt5_block::unpack_endpoint(endpoint, 1);
 
-#if CRNLIB_CREATE_DEBUG_IMAGES
-         endpoint_image(0, endpoint_index) = cur[0];
-         endpoint_image(1, endpoint_index) = cur[1];
-#endif
-
          for (uint j = 0; j < 2; j++)
          {
             int delta = cur[j] - prev[j];
@@ -398,10 +364,6 @@ namespace crnlib
             hist.inc_freq(sym);
 
             residual_syms.push_back(sym);
-
-#if CRNLIB_CREATE_DEBUG_IMAGES
-            endpoint_residual_image(j, endpoint_index) = static_cast<uint8>(sym);
-#endif
          }
 
          prev[0] = cur[0];
@@ -430,11 +392,6 @@ namespace crnlib
             console::debug("Total endpoint index delta: " CRNLIB_INT64_FORMAT_SPECIFIER, total_delta);
 #endif
       }
-
-#if CRNLIB_CREATE_DEBUG_IMAGES
-      image_utils::write_to_file(dynamic_string(cVarArg, "alpha_endpoint_residuals_%u.tga", trial_index).get_ptr(), endpoint_residual_image);
-      image_utils::write_to_file(dynamic_string(cVarArg, "alpha_endpoints_%u.tga", trial_index).get_ptr(), endpoint_image);
-#endif
 
       static_huffman_data_model residual_dm;
 
@@ -614,11 +571,6 @@ namespace crnlib
       for (uint i = 0; i < selectors.size(); i++)
          remapped_selectors[remapping[i]] = selectors[i];
 
-#if CRNLIB_CREATE_DEBUG_IMAGES
-      image_u8 residual_image(16, selectors.size());;
-      image_u8 selector_image(16, selectors.size());;
-#endif
-
       crnlib::vector<uint> residual_syms;
       residual_syms.reserve(selectors.size() * 8);
 
@@ -652,11 +604,6 @@ namespace crnlib
             }
             else
                prev_sym = sym;
-
-#if CRNLIB_CREATE_DEBUG_IMAGES
-            selector_image(i, selector_index) = (pTo_linear[crnlib_assert_range_incl<uint>(s.get_by_index(i), max_selector_value)] * 255) / max_selector_value;
-            residual_image(i, selector_index) = sym;
-#endif
          }
 
          prev_selectors = s;
@@ -684,11 +631,6 @@ namespace crnlib
             console::debug("Total selector index delta: " CRNLIB_INT64_FORMAT_SPECIFIER, total_delta);
 #endif
       }
-
-#if CRNLIB_CREATE_DEBUG_IMAGES
-      image_utils::write_to_file(dynamic_string(cVarArg, "selectors_%u_%u.tga", trial_index, max_selector_value).get_ptr(), selector_image);
-      image_utils::write_to_file(dynamic_string(cVarArg, "selector_residuals_%u_%u.tga", trial_index, max_selector_value).get_ptr(), residual_image);
-#endif
 
       static_huffman_data_model residual_dm;
 
@@ -1363,17 +1305,6 @@ namespace crnlib
 
       if (!m_hvq.compress(params, m_total_chunks, &m_chunks[0], m_task_pool))
          return false;
-
-#if CRNLIB_CREATE_DEBUG_IMAGES
-      if (params.m_debugging)
-      {
-         const dxt_hc::pixel_chunk_vec& pixel_chunks = m_hvq.get_compressed_chunk_pixels_final();
-
-         image_u8 img;
-         dxt_hc::create_debug_image_from_chunks((m_pParams->m_width+7)>>3, (m_pParams->m_height+7)>>3, pixel_chunks, &m_hvq.get_chunk_encoding_vec(), img, true, -1);
-         image_utils::write_to_file("quantized_chunks.tga", img);
-      }
-#endif
 
       return true;
    }

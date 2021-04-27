@@ -155,11 +155,7 @@ public:
       console::printf(" prefer DXT1A over DXT5 for images with alpha channels (.DDS only).");
       console::printf("-uniformMetrics - Use uniform color metrics, default=use perceptual metrics");
       console::printf("-noAdaptiveBlocks - Disable adaptive block sizes (i.e. disable macroblocks).");
-#ifdef CRNLIB_SUPPORT_ATI_COMPRESS
-      console::printf("-compressor [CRN,CRNF,RYG,ATI] - Set DXTn compressor, default=CRN");
-#else
       console::printf("-compressor [CRN,CRNF,RYG] - Set DXTn compressor, default=CRN");
-#endif
       console::printf("-dxtQuality [superfast,fast,normal,better,uber] - Endpoint optimizer speed.");
       console::printf("            Sets endpoint optimizer's max iteration depth. Default=uber.");
       console::printf("-noendpointcaching - Don't try reusing previous DXT endpoint solutions.");

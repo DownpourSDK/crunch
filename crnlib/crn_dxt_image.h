@@ -9,8 +9,6 @@
 #endif
 #include "crn_image.h"
 
-#define CRNLIB_SUPPORT_ATI_COMPRESS 0
-
 namespace crnlib
 {
    class task_pool;
@@ -236,10 +234,6 @@ namespace crnlib
       
       bool init_internal(dxt_format fmt, uint width, uint height);
       void init_task(uint64 data, void* pData_ptr);
-
-#if CRNLIB_SUPPORT_ATI_COMPRESS   
-      bool init_ati_compress(dxt_format fmt, const image_u8& img, const pack_params& p);
-#endif      
 
       void flip_col(uint x);
       void flip_row(uint y);

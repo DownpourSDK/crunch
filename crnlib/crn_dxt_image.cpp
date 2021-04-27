@@ -10,15 +10,6 @@
 #include "crn_console.h"
 #include "crn_threading.h"
 
-#if CRNLIB_SUPPORT_ATI_COMPRESS
-   #ifdef _DLL
-      #pragma comment(lib, "ATI_Compress_MT_DLL_VC8.lib")
-   #else
-      #pragma comment(lib, "ATI_Compress_MT_VC8.lib")
-   #endif
-   #include "..\ext\ATI_Compress\ATI_Compress.h"
-#endif
-
 #include "crn_rg_etc1.h"
 #include "crn_etc.h"
 #define CRNLIB_USE_RG_ETC1 1
@@ -295,111 +286,10 @@ namespace crnlib
       }
    }
 
-#if CRNLIB_SUPPORT_ATI_COMPRESS
-   bool dxt_image::init_ati_compress(dxt_format fmt, const image_u8& img, const pack_params& p)
-   {
-      image_u8 tmp_img(img);
-      for (uint y = 0; y < img.get_height(); y++)
-      {
-         for (uint x = 0; x < img.get_width(); x++)
-         {
-            color_quad_u8 c(img(x, y));
-            std::swap(c.r, c.b);
-            tmp_img(x, y) = c;
-         }
-      }
-
-      ATI_TC_Texture src_tex;
-      utils::zero_object(src_tex);
-      src_tex.dwSize = sizeof(ATI_TC_Texture);
-      src_tex.dwWidth = tmp_img.get_width();
-      src_tex.dwHeight = tmp_img.get_height();
-      src_tex.dwPitch = tmp_img.get_pitch_in_bytes();
-      src_tex.format = ATI_TC_FORMAT_ARGB_8888;
-      src_tex.dwDataSize = src_tex.dwPitch * tmp_img.get_height();
-      src_tex.pData = (ATI_TC_BYTE*)tmp_img.get_ptr();
-
-      ATI_TC_Texture dst_tex;
-      utils::zero_object(dst_tex);
-      dst_tex.dwSize = sizeof(ATI_TC_Texture);
-      dst_tex.dwWidth = tmp_img.get_width();
-      dst_tex.dwHeight = tmp_img.get_height();
-      dst_tex.dwDataSize = get_size_in_bytes();
-      dst_tex.pData = (ATI_TC_BYTE*)get_element_ptr();
-
-      switch (fmt)
-      {
-         case cDXT1:
-         case cDXT1A:
-            dst_tex.format = ATI_TC_FORMAT_DXT1;
-            break;
-         case cDXT3:
-            dst_tex.format = ATI_TC_FORMAT_DXT3;
-            break;
-         case cDXT5:
-            dst_tex.format = ATI_TC_FORMAT_DXT5;
-            break;
-         case cDXT5A:
-            dst_tex.format = ATI_TC_FORMAT_ATI1N;
-            break;
-         case cDXN_XY:
-            dst_tex.format = ATI_TC_FORMAT_ATI2N_XY;
-            break;
-         case cDXN_YX:
-            dst_tex.format = ATI_TC_FORMAT_ATI2N;
-            break;
-         default:
-         {
-            CRNLIB_ASSERT(false);
-            return false;
-         }
-      }
-
-      ATI_TC_CompressOptions options;
-      utils::zero_object(options);
-      options.dwSize = sizeof(ATI_TC_CompressOptions);
-
-      if (fmt == cDXT1A)
-      {
-         options.bDXT1UseAlpha = true;
-         options.nAlphaThreshold = (ATI_TC_BYTE)p.m_dxt1a_alpha_threshold;
-      }
-      options.bDisableMultiThreading = (p.m_num_helper_threads == 0);
-      switch (p.m_quality)
-      {
-         case cCRNDXTQualityFast:
-            options.nCompressionSpeed = ATI_TC_Speed_Fast;
-            break;
-         case cCRNDXTQualitySuperFast:
-            options.nCompressionSpeed = ATI_TC_Speed_SuperFast;
-            break;
-         default:
-            options.nCompressionSpeed = ATI_TC_Speed_Normal;
-            break;
-      }
-
-      if (p.m_perceptual)
-      {
-         options.bUseChannelWeighting = true;
-         options.fWeightingRed =   .212671f;
-         options.fWeightingGreen = .715160f;
-         options.fWeightingBlue =  .072169f;
-      }
-
-      ATI_TC_ERROR err = ATI_TC_ConvertTexture(&src_tex, &dst_tex, &options, NULL, NULL, NULL);
-      return err == ATI_TC_OK;
-   }
-#endif
-
    bool dxt_image::init(dxt_format fmt, const image_u8& img, const pack_params& p)
    {
       if (!init(fmt, img.get_width(), img.get_height(), false))
          return false;
-
-#if CRNLIB_SUPPORT_ATI_COMPRESS
-      if (p.m_compressor == cCRNDXTCompressorATI)
-         return init_ati_compress(fmt, img, p);
-#endif
 
       task_pool *pPool = p.m_pTask_pool;
 
