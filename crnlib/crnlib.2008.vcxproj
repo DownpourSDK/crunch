@@ -347,7 +347,6 @@
     <ClCompile Include="crn_dxt_hc_common.cpp" />
     <ClCompile Include="crn_dxt_image.cpp" />
     <ClCompile Include="crn_dynamic_string.cpp" />
-    <ClCompile Include="crn_etc.cpp" />
     <ClCompile Include="crn_file_utils.cpp" />
     <ClCompile Include="crn_find_files.cpp" />
     <ClCompile Include="crn_hash.cpp" />
@@ -404,7 +403,6 @@
     <ClCompile Include="crn_rand.cpp" />
     <ClCompile Include="crn_resampler.cpp" />
     <ClCompile Include="crn_resample_filters.cpp" />
-    <ClCompile Include="crn_rg_etc1.cpp" />
     <ClCompile Include="crn_ryg_dxt.cpp" />
     <ClCompile Include="crn_sparse_bit_array.cpp" />
     <ClCompile Include="crn_strutils.cpp" />
@@ -497,7 +495,6 @@
     <ClInclude Include="crn_rect.h" />
     <ClInclude Include="crn_resampler.h" />
     <ClInclude Include="crn_resample_filters.h" />
-    <ClInclude Include="crn_rg_etc1.h" />
     <ClInclude Include="crn_ryg_dxt.hpp" />
     <ClInclude Include="crn_ryg_types.hpp" />
     <ClInclude Include="crn_sparse_array.h" />

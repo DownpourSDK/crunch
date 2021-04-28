@@ -666,12 +666,6 @@ namespace crnlib
                dxt_fmt = cDXT5A;
                break;
             }
-            case PIXEL_FMT_ETC1:
-            {
-               m_format = PIXEL_FMT_ETC1;
-               dxt_fmt = cETC1;
-               break;
-            }
             default:
             {
                dynamic_string err_msg(cVarArg, "Unsupported DDS FOURCC format: 0x%08X", desc.ddpfPixelFormat.dwFourCC);
@@ -1048,12 +1042,6 @@ namespace crnlib
 
          switch (m_format)
          {
-            case PIXEL_FMT_ETC1:
-            {
-               desc.ddpfPixelFormat.dwFourCC = (uint32)PIXEL_FMT_ETC1;
-               desc.ddpfPixelFormat.dwRGBBitCount = 0;
-               break;
-            }
             case PIXEL_FMT_DXN:
             {
                desc.ddpfPixelFormat.dwFourCC = (uint32)PIXEL_FMT_3DC;
@@ -1363,9 +1351,6 @@ namespace crnlib
       {
          switch (kt.get_ogl_internal_fmt())
          {
-            case KTX_ETC1_RGB8_OES:
-               dxt_fmt = cETC1;
-               break;
             case KTX_RGB_S3TC:
             case KTX_RGB4_S3TC:
             case KTX_COMPRESSED_RGB_S3TC_DXT1_EXT:
@@ -1732,11 +1717,6 @@ namespace crnlib
                ogl_internal_fmt = KTX_COMPRESSED_LUMINANCE_LATC1_EXT;
                break;
             }
-            case PIXEL_FMT_ETC1:
-            {
-               ogl_internal_fmt = KTX_ETC1_RGB8_OES;
-               break;
-            }
             default:
             {
                CRNLIB_ASSERT(0);
@@ -2035,7 +2015,7 @@ namespace crnlib
 
    bool mipmapped_texture::convert(pixel_format fmt, bool cook, const dxt_image::pack_params& p, int qdxt_quality, bool hierarchical)
    {
-      if ((!pixel_format_helpers::is_dxt(fmt)) || (fmt == PIXEL_FMT_DXT3) || (fmt == PIXEL_FMT_ETC1))
+      if ((!pixel_format_helpers::is_dxt(fmt)) || (fmt == PIXEL_FMT_DXT3))
       {
          // QDXT doesn't support DXT3 or ETC1 yet.
          return convert(fmt, cook, p);
@@ -2521,11 +2501,6 @@ namespace crnlib
             state.m_has_blocks[1] = true;
             state.m_qdxt5_params[0].m_comp_index = 3;
             break;
-         }
-         case PIXEL_FMT_ETC1:
-         {
-            console::warning("mipmapped_texture::qdxt_pack_init: This method does not support ETC1");
-            return false;
          }
          default:
          {

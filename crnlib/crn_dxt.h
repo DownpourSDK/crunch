@@ -44,8 +44,6 @@ namespace crnlib
 
       cDXN_XY,    // inverted relative to standard ATI2, 360's DXN
       cDXN_YX,    // standard ATI2,
-
-      cETC1       // Ericsson texture compression (color only, 4x4 blocks, 4bpp, 64-bits/block)
    };
 
    const float cDXT1MaxLinearValue = 3.0f;

@@ -3,10 +3,6 @@
 #pragma once
 #include "crn_dxt1.h"
 #include "crn_dxt5a.h"
-#include "crn_etc.h"
-#if CRNLIB_SUPPORT_ETC_A1
-#include "crn_etc_a1.h"
-#endif
 #include "crn_image.h"
 
 namespace crnlib
@@ -36,7 +32,7 @@ namespace crnlib
       
       dxt_format get_format() const { return m_format; }
       
-      bool has_color() const { return (m_format == cDXT1) || (m_format == cDXT1A) || (m_format == cDXT3) || (m_format == cDXT5) || (m_format == cETC1); }
+      bool has_color() const { return (m_format == cDXT1) || (m_format == cDXT1A) || (m_format == cDXT3) || (m_format == cDXT5); }
       
       // Will be pretty slow if the image is DXT1, as this method scans for alpha blocks/selectors.
       bool has_alpha() const;
@@ -49,8 +45,6 @@ namespace crnlib
          
          cAlphaDXT3,    // DXT3 alpha block (only)
          cAlphaDXT5,    // DXT5 alpha block (only)
-
-         cColorETC1,    // ETC1 color block
       };
       
       element_type get_element_type(uint element_index) const { CRNLIB_ASSERT(element_index < m_num_elements_per_block); return m_element_type[element_index]; }
@@ -180,10 +174,6 @@ namespace crnlib
       {
          dxt1_endpoint_optimizer m_dxt1_optimizer;
          dxt5_endpoint_optimizer m_dxt5_optimizer;
-         pack_etc1_block_context m_etc1_optimizer;
-#if CRNLIB_SUPPORT_ETC_A1
-         etc_a1::pack_etc1_block_context m_etc1_a1_optimizer;
-#endif
       };
       
       void set_block_pixels(uint block_x, uint block_y, const color_quad_u8* pPixels, const pack_params& p, set_block_pixels_context& context);

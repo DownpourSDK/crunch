@@ -70,8 +70,6 @@ enum crn_format
    // DXT5 alpha blocks only
    cCRNFmtDXT5A,
 
-   cCRNFmtETC1,
-
    cCRNFmtTotal,
 
    cCRNFmtForceDWORD = 0xFFFFFFFF

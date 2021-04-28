@@ -194,12 +194,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="corpus_gen.cpp" />
-    <ClCompile Include="corpus_test.cpp" />
     <ClCompile Include="crunch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="corpus_gen.h" />
-    <ClInclude Include="corpus_test.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\crnlib\crnlib.2008.vcxproj">

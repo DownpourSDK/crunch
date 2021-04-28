@@ -124,9 +124,6 @@
     <ClCompile Include="crn_dxt_hc_common.cpp">
       <Filter>Source Files\comp</Filter>
     </ClCompile>
-    <ClCompile Include="crn_etc.cpp">
-      <Filter>Source Files\comp</Filter>
-    </ClCompile>
     <ClCompile Include="crn_huffman_codes.cpp">
       <Filter>Source Files\comp</Filter>
     </ClCompile>
@@ -143,9 +140,6 @@
       <Filter>Source Files\comp</Filter>
     </ClCompile>
     <ClCompile Include="crn_qdxt5.cpp">
-      <Filter>Source Files\comp</Filter>
-    </ClCompile>
-    <ClCompile Include="crn_rg_etc1.cpp">
       <Filter>Source Files\comp</Filter>
     </ClCompile>
     <ClCompile Include="crn_ryg_dxt.cpp">
@@ -393,9 +387,6 @@
     <ClInclude Include="crn_dxt_hc_common.h">
       <Filter>Source Files\comp</Filter>
     </ClInclude>
-    <ClInclude Include="crn_etc.h">
-      <Filter>Source Files\comp</Filter>
-    </ClInclude>
     <ClInclude Include="crn_huffman_codes.h">
       <Filter>Source Files\comp</Filter>
     </ClInclude>
@@ -412,9 +403,6 @@
       <Filter>Source Files\comp</Filter>
     </ClInclude>
     <ClInclude Include="crn_qdxt5.h">
-      <Filter>Source Files\comp</Filter>
-    </ClInclude>
-    <ClInclude Include="crn_rg_etc1.h">
       <Filter>Source Files\comp</Filter>
     </ClInclude>
     <ClInclude Include="crn_ryg_dxt.hpp">

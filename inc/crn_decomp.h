@@ -2628,7 +2628,6 @@ namespace crnd
          case cCRNFmtDXT5_xGxR:   return CRND_FOURCC('x', 'G', 'x', 'R');
          case cCRNFmtDXT5_xGBR:   return CRND_FOURCC('x', 'G', 'B', 'R');
          case cCRNFmtDXT5_AGBR:   return CRND_FOURCC('A', 'G', 'B', 'R');
-         case cCRNFmtETC1:        return CRND_FOURCC('E', 'T', 'C', '1');
          default: break;
       }
       CRND_ASSERT(false);
@@ -2655,7 +2654,6 @@ namespace crnd
       {
          case cCRNFmtDXT1:
          case cCRNFmtDXT5A:
-         case cCRNFmtETC1:
             return 4;
          case cCRNFmtDXT3:
          case cCRNFmtDXT5:

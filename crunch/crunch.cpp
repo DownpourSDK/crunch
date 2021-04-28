@@ -24,7 +24,6 @@
 #include "crn_decomp.h"
 
 #include "corpus_gen.h"
-#include "corpus_test.h"
 
 using namespace crnlib;
 
@@ -1276,11 +1275,6 @@ static int main_internal(int argc, char *argv[])
    {
       corpus_gen generator;
       status = generator.generate(cmd_line.get_ptr());
-   }
-   else if (check_for_option(argc, argv, "corpus_test"))
-   {
-      corpus_tester tester;
-      status = tester.test(cmd_line.get_ptr());
    }
    else
    {

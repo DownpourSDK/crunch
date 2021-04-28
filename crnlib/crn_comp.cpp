@@ -1284,11 +1284,6 @@ namespace crnlib
             params.m_perceptual = false;
             break;
          }
-         case cCRNFmtETC1:
-         {
-            console::warning("crn_comp::quantize_chunks: This class does not support ETC1");
-            return false;
-         }
          default:
          {
             return false;

@@ -7,12 +7,9 @@
 #include "crn_dynamic_stream.h"
 #include "crn_buffer_stream.h"
 #include "crn_ryg_dxt.hpp"
-#include "crn_etc.h"
 
 #define CRND_HEADER_FILE_ONLY
 #include "../inc/crn_decomp.h"
-
-#include "crn_rg_etc1.h"
 
 namespace crnlib
 {
@@ -41,10 +38,6 @@ namespace crnlib
          crnd::crnd_set_memory_callbacks(realloc_func, msize_func, NULL);
 
          ryg_dxt::sInitDXT();
-
-         pack_etc1_block_init();
-
-         rg_etc1::pack_etc1_block_init();
       }
    };
 
@@ -343,12 +336,6 @@ bool crn_decompress_block(const void *pSrc_block, crn_uint32 *pDst_pixels_u32, c
 
    switch (crn_get_fundamental_dxt_format(crn_fmt))
    {
-      case cCRNFmtETC1:
-      {
-         const etc1_block& block = *reinterpret_cast<const etc1_block*>(pSrc_block);
-         unpack_etc1(block, pDst_pixels, false);
-         break;
-      }
       case cCRNFmtDXT1:
       {
          const dxt1_block* pDXT1_block = reinterpret_cast<const dxt1_block*>(pSrc_block);
