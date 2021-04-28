@@ -189,9 +189,6 @@ namespace crnlib
       // Returns the number of block colors: 3, 4, 6, 8, or 16.
       uint get_block_colors(uint block_x, uint block_y, uint element_index, color_quad_u8* pColors, uint subblock_index = 0);
             
-      uint get_subblock_index(uint x, uint y, uint element_index) const;
-      uint get_total_subblocks(uint element_index) const;
-      
       uint get_selector(uint x, uint y, uint element_index) const;
       
       void change_dxt1_to_dxt1a();

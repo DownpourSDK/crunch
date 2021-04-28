@@ -1118,16 +1118,6 @@ namespace crnlib
       return 0;
    }
 
-   uint dxt_image::get_subblock_index(uint x, uint y, uint element_index) const
-   {
-       return 0;
-   }
-
-   uint dxt_image::get_total_subblocks(uint element_index) const
-   {
-      return 0;
-   }
-
    uint dxt_image::get_selector(uint x, uint y, uint element_index) const
    {
       CRNLIB_ASSERT((x < m_width) && (y < m_height));

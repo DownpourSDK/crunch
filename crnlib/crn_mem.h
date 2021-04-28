@@ -130,7 +130,7 @@ namespace crnlib
    {
       if (!num) num = 1;
 
-      uint64 total = CRNLIB_MIN_ALLOC_ALIGNMENT + sizeof(T) * num;
+      uint64 total = CRNLIB_MIN_ALLOC_ALIGNMENT + sizeof(T) * static_cast<crnlib::uint64>(num);
       if (total > CRNLIB_MAX_POSSIBLE_BLOCK_SIZE)
       {
          crnlib_mem_error("crnlib_new_array: Array too large!");
