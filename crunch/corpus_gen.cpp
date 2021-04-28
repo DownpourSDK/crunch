@@ -98,9 +98,6 @@ namespace crnlib
          dst_block_index++;
       }
 
-#if 0      
-      //new_img.swap(img);
-#else
       crnlib::vector<uint> remaining_blocks(num_blocks_x);
 
       console::printf("Arranging %u blocks...", total_blocks);
@@ -158,7 +155,6 @@ namespace crnlib
             remaining_blocks.erase_unordered(best_index);
          }
       }
-#endif      
    }
 
    bool corpus_gen::generate(const char* pCmd_line)

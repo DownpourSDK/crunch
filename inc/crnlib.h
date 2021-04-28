@@ -17,7 +17,7 @@
 #pragma warning (disable: 4127) //  conditional expression is constant
 #endif
 
-#define CRNLIB_VERSION 104
+#define CRNLIB_VERSION 105
 
 #define CRNLIB_SUPPORT_SQUISH 0
 

@@ -350,7 +350,6 @@
     <ClCompile Include="crn_file_utils.cpp" />
     <ClCompile Include="crn_find_files.cpp" />
     <ClCompile Include="crn_hash.cpp" />
-    <ClCompile Include="crn_hash_map.cpp" />
     <ClCompile Include="crn_huffman_codes.cpp" />
     <ClCompile Include="crn_image_utils.cpp" />
     <ClCompile Include="crn_jpgd.cpp">

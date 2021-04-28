@@ -283,19 +283,6 @@ namespace crnlib
       }
       else
       {
-   #if 0
-         while (Parea != Psrc_list->Ptail)
-         {
-            insert_area_after(Pdst_list, Pdst_list->Phead,
-               Parea->x1,
-               Parea->y1,
-               Parea->x2,
-               Parea->y2);
-
-            Parea = Parea->Pnext;
-         }
-   #endif
-
          Area *Pprev_area = Pdst_list->Phead;
 
          while (Parea != Psrc_list->Ptail)
@@ -552,43 +539,6 @@ namespace crnlib
       }
    }
 
-   #if 0
-   void Area_List_intersect_Area_List(
-                                      Area_List *Pouter_list,
-                                      Area_List *Pinner_list,
-                                      Area_List *Pdst_list)
-   {
-      Area *Parea1 = Pouter_list->Phead->Pnext;
-
-      while (Parea1 != Pouter_list->Ptail)
-      {
-         Area *Parea2 = Pinner_list->Phead->Pnext;
-         int x1, y1, x2, y2;
-
-         x1 = Parea1->x1; x2 = Parea1->x2;
-         y1 = Parea1->y1; y2 = Parea1->y2;
-
-         while (Parea2 != Pinner_list->Ptail)
-         {
-            if ((x1 <= Parea2->x2) && (x2 >= Parea2->x1) &&
-               (y1 <= Parea2->y2) && (y2 >= Parea2->y1))
-            {
-               insert_area_after(Pdst_list, Pdst_list->Phead,
-                  math::maximum(x1, Parea2->x1),
-                  math::maximum(y1, Parea2->y1),
-                  math::minimum(x2, Parea2->x2),
-                  math::minimum(y2, Parea2->y2));
-            }
-
-            Parea2 = Parea2->Pnext;
-         }
-
-         Parea1 = Parea1->Pnext;
-      }
-   }
-   #endif
-
-   #if 1
    void Area_List_intersect_Area_List(Area_List *Pouter_list,
                                       Area_List *Pinner_list,
                                       Area_List *Pdst_list)
@@ -663,7 +613,6 @@ namespace crnlib
          Parea1 = Parea1->Pnext;
       }
    }
-   #endif
 
    Area_List_Ptr Area_List_create_optimal(Area_List_Ptr Plist)
    {

@@ -941,33 +941,6 @@ namespace crnlib
       }
    }
 
-#if 0
-   bool crn_comp::init_chunk_encoding_dm()
-   {
-      symbol_histogram hist(1 << (3 * cEncodingMapNumChunksPerCode));
-
-      for (uint chunk_index = 0; chunk_index < m_hvq.get_num_chunks(); chunk_index += cEncodingMapNumChunksPerCode)
-      {
-         uint index = 0;
-         for (uint i = 0; i < cEncodingMapNumChunksPerCode; i++)
-         {
-            if ((chunk_index + i) >= m_hvq.get_num_chunks())
-               break;
-            const dxt_hc::chunk_encoding& encoding = m_hvq.get_chunk_encoding(chunk_index + i);
-
-            index |= (encoding.m_encoding_index << (i * 3));
-         }
-
-         hist.inc_freq(index);
-      }
-
-      if (!m_chunk_encoding_dm.init(true, hist, 16))
-         return false;
-
-      return true;
-   }
-#endif
-
    bool crn_comp::alias_images()
    {
       for (uint face_index = 0; face_index < m_pParams->m_faces; face_index++)

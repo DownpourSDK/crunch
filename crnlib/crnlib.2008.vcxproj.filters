@@ -73,9 +73,6 @@
     <ClCompile Include="crn_rand.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="crn_hash_map.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
     <ClCompile Include="crn_sparse_bit_array.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
@@ -582,5 +579,6 @@
     <ClInclude Include="crn_mipmapped_texture.h">
       <Filter>Source Files\texture</Filter>
     </ClInclude>
+    <ClInclude Include="crn_etc.h" />
   </ItemGroup>
 </Project>

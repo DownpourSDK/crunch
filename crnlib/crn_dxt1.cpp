@@ -225,36 +225,6 @@ namespace crnlib
    // Compute PCA (principle axis, i.e. direction of largest variance) of input vectors.
    void dxt1_endpoint_optimizer::compute_pca(vec3F& axis, const vec3F_array& norm_colors, const vec3F& def)
    {
-#if 0
-      axis.clear();
-
-      CRNLIB_ASSERT(m_unique_colors.size() == norm_colors.size());
-
-      // Incremental PCA
-      bool first = true;
-      for (uint i = 0; i < norm_colors.size(); i++)
-      {
-         const uint weight = m_unique_colors[i].m_weight;
-
-         for (uint j = 0; j < weight; j++)
-         {
-            vec3F x(norm_colors[i] * norm_colors[i][0]);
-            vec3F y(norm_colors[i] * norm_colors[i][1]);
-            vec3F z(norm_colors[i] * norm_colors[i][2]);
-
-            vec3F v(first ? norm_colors[0] : axis);
-            first = false;
-
-            v.normalize(&def);
-
-            axis[0] += (x * v);
-            axis[1] += (y * v);
-            axis[2] += (z * v);
-         }
-      }
-
-      axis.normalize(&def);
-#else
       double cov[6] = { 0, 0, 0, 0, 0, 0 };
 
       //vec3F lo(math::cNearlyInfinite);
@@ -348,7 +318,6 @@ namespace crnlib
 
          axis.set(static_cast<float>(vfr), static_cast<float>(vfg), static_cast<float>(vfb));
       }
-#endif
    }
 
    static const uint8 g_invTableNull[4] = { 0, 1, 2, 3 };

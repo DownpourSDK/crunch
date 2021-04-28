@@ -287,15 +287,6 @@ public:
          return false;
       }
 
-#if 0
-      if (m_params.get_count(""))
-      {
-         console::error("Unrecognized command line parameter: \"%s\"", m_params.get_value_as_string_or_empty("", 0).get_ptr());
-
-         return false;
-      }
-#endif
-
       if (m_params.get_value_as_bool("debug"))
       {
          console::debug("Command line parameters:");
