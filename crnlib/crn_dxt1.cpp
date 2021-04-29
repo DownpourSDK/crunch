@@ -555,12 +555,6 @@ namespace crnlib
 
                      if (better)
                      {
-#if 0
-                        printf("comp: %u, orig: %u %u, new: %u %u, orig_error: %u, new_error: %u\n", comp_index,
-                           orig_l[comp_index], orig_h[comp_index],
-                           l[comp_index], h[comp_index],
-                           orig_error, m_best_solution.m_error);
-#endif
                         if (!m_best_solution.m_error)
                            return;
 
@@ -1204,18 +1198,11 @@ namespace crnlib
 
          compute_pca(m_principle_axis, m_norm_unique_colors_weighted, vec3F(.2837149f, 0.9540631f, 0.096277453f));
 
-#if 0
-         matrix44F m(matrix44F::make_scale_matrix(perceptual_weights[0], perceptual_weights[1], perceptual_weights[2]));
-         matrix44F im(m.get_inverse());
-         im.transpose_in_place();
-         m_principle_axis = m_principle_axis * im;
-#else
          // Purposely scale the components of the principle axis by the perceptual weighting.
          // There's probably a cleaner way to go about this, but it works (more competitive in perceptual mode against nvdxt.exe or ATI_Compress).
          m_principle_axis[0] /= perceptual_weights[0];
          m_principle_axis[1] /= perceptual_weights[1];
          m_principle_axis[2] /= perceptual_weights[2];
-#endif
          m_principle_axis.normalize_in_place();
 
          if (num_passes > 1)

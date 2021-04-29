@@ -290,13 +290,6 @@ namespace crnlib
 #endif
 
          } // level
-
-#if 0
-         trace("chunk encoding hist: ");
-         for (uint i = 0; i < cNumChunkEncodings; i++)
-            trace("%u ", encoding_hist[i]);
-         trace("\n");
-#endif
       }
       else
       {

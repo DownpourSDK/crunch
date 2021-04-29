@@ -737,15 +737,7 @@ namespace crnlib
                   
       if (!pitch)
          pitch = default_pitch;
-#if 0
-      else if (pitch & 3)
-      {
-         // MS's DDS docs say the pitch must be DWORD aligned - but this isn't always the case.
-         // ATI Compressonator writes images with non-DWORD aligned pitches, and the DDSWithoutD3DX sample from MS doesn't compute the proper DWORD aligned pitch when reading DDS
-         // files, so the docs must be wrong/outdated.
-         console::warning("DDS file's pitch is not divisible by 4 - trying to load anyway.");
-      }
-#endif
+
       // Check for obviously wacky source pitches (probably a corrupted/invalid file).
       else if (pitch > default_pitch * 8)
       {
@@ -2903,17 +2895,7 @@ namespace crnlib
 
       set_last_error("CRN unpack failed");
 
-#if 0
-      timer t;
-      double total_time = 0.0f;
-      t.start();
-#endif
-
       crnd::crnd_unpack_context pContext = crnd::crnd_unpack_begin(pData, data_size);
-
-#if 0
-      total_time += t.get_elapsed_secs();
-#endif
 
       if (!pContext)
       {
@@ -2941,10 +2923,6 @@ namespace crnlib
 
          total_pixels += num_blocks_x * num_blocks_y * 4 * 4 * tex_info.m_faces;
 
-#if 0
-         t.start();
-#endif
-
          for (uint f = 0; f < tex_info.m_faces; f++)
             pFaces[f] = &dxt_data[f * size_of_face];
 
@@ -2956,10 +2934,6 @@ namespace crnlib
                   crnlib_delete(faces[f][l]);
             return false;
          }
-
-#if 0
-         total_time += t.get_elapsed_secs();
-#endif
 
          for (uint f = 0; f < tex_info.m_faces; f++)
          {
@@ -2983,14 +2957,6 @@ namespace crnlib
             faces[f][l]->assign(pDXT_image, dds_fmt);
          }
       }
-
-#if 0
-      if (total_pixels)
-      {
-         console::info("read_crn_from_memory: Total pixels: %u, ms: %3.3fms, megapixels/sec: %3.3f",
-            total_pixels, total_time * 1000.0f, total_pixels / total_time);
-      }
-#endif
 
       crnd::crnd_unpack_end(pContext);
 
@@ -3292,18 +3258,6 @@ namespace crnlib
 
       return true;
    }
-
-#if 0
-   bool mipmapped_texture::flip_x()
-   {
-      for (uint l = 0; l < m_faces.size(); l++)
-         for (uint m = 0; m < m_faces[l].size(); m++) 
-            if (!m_faces[l][m]->flip_x())
-               return false;
-
-      return true;
-   }
-#endif
 
    bool mipmapped_texture::flip_y_helper()
    {

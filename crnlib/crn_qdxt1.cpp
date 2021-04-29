@@ -163,23 +163,6 @@ namespace crnlib
                         error += color::elucidian_distance(layout_pixels[i], c[layouts[l].m_selectors[i]], false);
 
                      layouts[l].m_error = error;
-
-#if 0
-                     if ((width > 4) || (height > 4))
-                     {
-                        const uint dist = color::elucidian_distance(
-                           dxt1_block::unpack_color(static_cast<uint16>(layouts[l].m_low_color), true),
-                           dxt1_block::unpack_color(static_cast<uint16>(layouts[l].m_high_color), true), false);
-
-                        layouts[l].m_penalty = math::clamp((sqrt((float)dist) - 75.0f) / 150.0f, 0.0f, 2.0f);
-                        if ((width == 8) && (height == 8))
-                           layouts[l].m_penalty *= 2.0f;
-                     }
-                     else
-                     {
-                        layouts[l].m_penalty = 0.0f;
-                     }
-#endif
                   }
 
                   double best_peak_snr = -1.0f;
@@ -310,13 +293,6 @@ namespace crnlib
 #endif
 
          } // level
-
-#if 0
-         trace("chunk encoding hist: ");
-         for (uint i = 0; i < cNumChunkEncodings; i++)
-            trace("%u ", encoding_hist[i]);
-         trace("\n");
-#endif
       }
       else
       {
@@ -853,12 +829,6 @@ namespace crnlib
          total_blocks += num;
          max_blocks = math::maximum(max_blocks, num);
       }
-#if 0
-      trace("Num clusters: %u, Average blocks per cluster: %u, Max blocks per cluster: %u\n",
-         m_endpoint_cluster_indices.size(),
-         total_blocks / m_endpoint_cluster_indices.size(),
-         max_blocks);
-#endif
 
       crnlib::vector< crnlib::vector<uint> >& selector_cluster_indices = m_cached_selector_cluster_indices[params.m_quality_level];
 

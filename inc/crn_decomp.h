@@ -3284,13 +3284,6 @@ uint32 symbol_codec::decode(const static_huffman_data_model& model)
 
    uint64 symbol_codec::stop_decoding()
    {
-#if 0
-      uint32 i = get_bits(4);
-      uint32 k = get_bits(3);
-      i, k;
-      CRND_ASSERT((i == 15) && (k == 3));
-#endif
-
       uint64 n = static_cast<uint64>(m_pDecode_buf_next - m_pDecode_buf);
 
       return n;

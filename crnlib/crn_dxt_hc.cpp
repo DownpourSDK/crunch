@@ -528,18 +528,6 @@ namespace crnlib
                         max_std_dev = math::maximum(max_std_dev, std_dev);
                      }
                   }
-
-#if 0
-// rg [4/28/09] - disabling this because it's fucking up dxt5_xgbr normal maps
-                  const float l = 6.0f;
-                  const float k = .5f;
-
-                  if (max_std_dev > l)
-                  {
-                     float s = max_std_dev - l;
-                     quality[e] -= (k * s);
-                  }
-#endif
                }
 
                if (quality[e] > best_quality)

@@ -74,26 +74,6 @@ namespace crnlib
          update_hist(xhist, cur_val, next_val, n);
       }
 
-#if 0      
-      uint total1 = 0, total2 = 0;
-      for (uint i = 0; i < n; i++)
-      {
-         for (uint j = 0; j < n; j++)
-         {
-            if (i == j)
-               continue;
-               
-            //uint a = hist[i * n + j];
-            //total1 += a;
-            
-            uint c = read_hist(xhist, i, j, n);
-            total2 += c;
-         }
-      }
-      
-      printf("%u %u\n", total1, total2);
-#endif      
-
       uint max_freq = 0;
       uint max_index = 0;
       for (uint i = 0; i < t; i++)
@@ -147,20 +127,7 @@ namespace crnlib
          {
             uint u = values_remaining[i];
 
-   #if 0
-            double total_freq = 0;
-
-            for (uint j = 0; j < values_chosen.size(); j++)
-            {
-               uint l = values_chosen[j];
-
-               total_freq += read_hist(xhist, u, l, n); //[u * n + l];
-            }
-
-            CRNLIB_ASSERT(total_freq_to_chosen_values[u] == total_freq);
-   #else
             double total_freq = total_freq_to_chosen_values[u];
-   #endif         
    
             if (pFunc)
             {
@@ -234,54 +201,6 @@ namespace crnlib
          uint v = values_chosen[i];
          remap_table[v] = i;
       }
-
-   #if 0
-      uint before_sum = 0;
-      uint after_sum = 0;
-      {
-         printf("\nBEFORE:\n");
-         crnlib::vector<uint> delta_hist(n*2);
-
-         int sum = 0;
-         for (uint i = 1; i < num_indices; i++)
-         {
-            int prev = pIndices[i-1];
-            int cur = pIndices[i];
-            delta_hist[prev-cur+n]++;
-            sum += labs(prev-cur);
-         }
-
-         printf("\n");
-         for (uint i = 0; i < n*2; i++)   
-            printf("%04u ", delta_hist[i]);
-
-         printf("\nSum: %i\n", sum);
-         before_sum = sum;
-      }      
-
-      {
-         printf("AFTER:\n");
-         crnlib::vector<uint> delta_hist(n*2);
-
-         int sum = 0;
-         for (uint i = 1; i < num_indices; i++)
-         {
-            int prev = remap_table[pIndices[i-1]];
-            int cur = remap_table[pIndices[i]];
-            delta_hist[prev-cur+n]++;
-            sum += labs(prev-cur);
-         }
-
-         printf("\n");
-         for (uint i = 0; i < n*2; i++)   
-            printf("%04u ", delta_hist[i]);
-
-         printf("\nSum: %i\n", sum);
-         after_sum = sum;
-      }      
-      printf("Before sum: %u, After sum: %u\n", before_sum, after_sum);
-   #endif   
-   
 //      printf("create_zeng_reorder_table end:\n");
    }
 
