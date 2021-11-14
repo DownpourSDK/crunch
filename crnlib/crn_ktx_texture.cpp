@@ -378,13 +378,9 @@ namespace crnlib
 
       // See Section 2.8 of KTX file format: No rounding to block sizes should be applied for block compressed textures.
       // OK, I'm going to break that rule otherwise KTX can only store a subset of textures that DDS can handle for no good reason.
-#if 0
-      const uint mip0_row_blocks = m_header.m_pixelWidth / m_block_dim;
-      const uint mip0_col_blocks = CRNLIB_MAX(1, m_header.m_pixelHeight) / m_block_dim;
-#else
       const uint mip0_row_blocks = (m_header.m_pixelWidth + m_block_dim - 1) / m_block_dim;
       const uint mip0_col_blocks = (CRNLIB_MAX(1, m_header.m_pixelHeight) + m_block_dim - 1) / m_block_dim;
-#endif
+
       if ((!mip0_row_blocks) || (!mip0_col_blocks))
          return false;
 

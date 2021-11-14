@@ -48,10 +48,6 @@ namespace crnlib
          unpack_color(pColors[0], c0);
          unpack_color(pColors[1], c1);
 
-#if 0         
-         lerp_color(pColors[2], pColors[0], pColors[1], 0x55);
-         lerp_color(pColors[3], pColors[0], pColors[1], 0xAA);
-#else
          pColors[2].r = (pColors[0].r*2+pColors[1].r)/3;
          pColors[2].g = (pColors[0].g*2+pColors[1].g)/3;
          pColors[2].b = (pColors[0].b*2+pColors[1].b)/3;
@@ -59,7 +55,6 @@ namespace crnlib
          pColors[3].r = (pColors[1].r*2+pColors[0].r)/3;
          pColors[3].g = (pColors[1].g*2+pColors[0].g)/3;
          pColors[3].b = (pColors[1].b*2+pColors[0].b)/3;
-#endif         
       }
       
       // false if all selectors equal

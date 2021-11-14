@@ -3594,24 +3594,6 @@ namespace crnd
       chunk_tile_desc m_tiles[4];
    };
 
-#if 0
-   static crnd_chunk_encoding_desc g_crnd_chunk_encodings[cNumChunkEncodings] =
-   {
-      { 1, { { 0, 0, 2, 2 } } },
-
-      { 2, { { 0, 0, 2, 1 }, { 0, 1, 2, 1 } } },
-      { 2, { { 0, 0, 1, 2 }, { 1, 0, 1, 2 } } },
-
-      { 3, { { 0, 0, 2, 1 }, { 0, 1, 1, 1 }, { 1, 1, 1, 1 } } },
-      { 3, { { 0, 1, 2, 1 }, { 0, 0, 1, 1 }, { 1, 0, 1, 1 } } },
-
-      { 3, { { 0, 0, 1, 2 }, { 1, 0, 1, 1 }, { 1, 1, 1, 1 } } },
-      { 3, { { 1, 0, 1, 2 }, { 0, 0, 1, 1 }, { 0, 1, 1, 1 } } },
-
-      { 1, { { 0, 0, 1, 1 }, { 1, 0, 1, 1 }, { 0, 1, 1, 1 }, { 1, 1, 1, 1 } } }
-   };
-#endif
-
    struct crnd_encoding_tile_indices
    {
       uint8 m_tiles[4];
@@ -4067,16 +4049,6 @@ namespace crnd
                //cur[j*2+1] = ((sym/15)-7 + cur[j*2+1]) & 7;
             }
 
-#if 0
-            dxt5_block blk;
-            for (uint32 y = 0; y < 4; y++)
-               for (uint32 x = 0; x < 4; x++)
-                  blk.set_selector(x, y, pFrom_linear[cur[x+y*4]]);
-
-            *pDst++ = blk.get_selectors_as_word(0);
-            *pDst++ = blk.get_selectors_as_word(1);
-            *pDst++ = blk.get_selectors_as_word(2);
-#else
             *pDst++ = (uint16)((pFrom_linear[cur[0 ]]      ) | (pFrom_linear[cur[1 ]] <<  3) | (pFrom_linear[cur[2 ]] <<  6) | (pFrom_linear[cur[3 ]] <<  9) |
                (pFrom_linear[cur[4 ]] << 12) | (pFrom_linear[cur[5 ]] << 15));
 
@@ -4085,7 +4057,6 @@ namespace crnd
 
             *pDst++ = (uint16)((pFrom_linear[cur[10]] >> 2) | (pFrom_linear[cur[11]] << 1) | (pFrom_linear[cur[12]] << 4) |
                (pFrom_linear[cur[13]] << 7) | (pFrom_linear[cur[14]] << 10) | (pFrom_linear[cur[15]] << 13));
-#endif
          }
 
          CRND_HUFF_DECODE_END(m_codec);

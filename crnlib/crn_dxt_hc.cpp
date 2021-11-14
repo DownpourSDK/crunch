@@ -274,15 +274,6 @@ namespace crnlib
          for (uint x = 0; x < width; x++)
             pixels[x + y * width] = chunk(x_ofs + x, y_ofs + y);
 
-#if 0 //CRNLIB_USE_FAST_DXT
-      uint low, high;
-      dxt_fast::compress_alpha_block(width * height, pixels, low, high, pAlpha_selectors, component_index);
-      results.m_pSelectors = pAlpha_selectors;
-      results.m_error = INT_MAX;
-      results.m_first_endpoint = static_cast<uint8>(low);
-      results.m_second_endpoint = static_cast<uint8>(high);
-      results.m_block_type = 0;
-#else
       dxt5_endpoint_optimizer optimizer;
       dxt5_endpoint_optimizer::params params;
       params.m_block_index = chunk_index;
@@ -295,7 +286,6 @@ namespace crnlib
       results.m_pSelectors = pAlpha_selectors;
 
       optimizer.compute(params, results);
-#endif
    }
 
    void dxt_hc::determine_compressed_chunks_task(uint64 data, void* pData_ptr)
@@ -1484,9 +1474,6 @@ namespace crnlib
                   {
                      for (uint bx = 0; bx < tile_blocks_x; bx++)
                      {
-   #if 0
-                        uint best_index = selector_vq.find_best_codebook_entry_fs(training_vecs[comp_chunk_index][(tile_block_ofs_x+bx)+(tile_block_ofs_y+by)*2][chunk_index]);
-   #else
                         const dxt_pixel_block& block = m_pChunks[chunk_index].m_blocks[tile_block_ofs_y + by][tile_block_ofs_x + bx];
 
                         uint best_error = UINT_MAX;
@@ -1523,7 +1510,6 @@ namespace crnlib
                                  break;
                            }
                         } // i
-   #endif
 
                         CRNLIB_ASSERT( (tile_block_ofs_x + bx) < 2 );
                         CRNLIB_ASSERT( (tile_block_ofs_y + by) < 2 );
