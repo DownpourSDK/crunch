@@ -23,8 +23,6 @@
 #define CRND_HEADER_FILE_ONLY
 #include "crn_decomp.h"
 
-#include "corpus_gen.h"
-
 using namespace crnlib;
 
 const int cDefaultCRNQualityLevel = 128;
@@ -1261,17 +1259,7 @@ static int main_internal(int argc, char* argv[])
     dynamic_string cmd_line;
     get_command_line_as_single_string(cmd_line, argc, argv);
 
-    bool status = false;
-    if (check_for_option(argc, argv, "corpus_gen"))
-    {
-        corpus_gen generator;
-        status = generator.generate(cmd_line.get_ptr());
-    }
-    else
-    {
-        crunch converter;
-        status = converter.convert(cmd_line.get_ptr());
-    }
+    const bool status = crunch().convert(cmd_line.get_ptr());
 
     colorized_console::deinit();
 
