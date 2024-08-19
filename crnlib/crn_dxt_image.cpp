@@ -2,9 +2,6 @@
 // This software is in the public domain. Please see license.txt.
 #include "crn_core.h"
 #include "crn_dxt_image.h"
-#if CRNLIB_SUPPORT_SQUISH
-#include "squish\squish.h"
-#endif
 #include "crn_ryg_dxt.hpp"
 #include "crn_dxt_fast.h"
 #include "crn_console.h"
@@ -785,52 +782,6 @@ namespace crnlib
    {
       element* pElement = &get_element(block_x, block_y, 0);
 
-#if CRNLIB_SUPPORT_SQUISH
-      if ((p.m_compressor == cCRNDXTCompressorSquish) && ((m_format == cDXT1) || (m_format == cDXT1A) || (m_format == cDXT3) || (m_format == cDXT5) || (m_format == cDXT5A)))
-      {
-         uint squish_flags = 0;
-         if ((m_format == cDXT1) || (m_format == cDXT1A))
-            squish_flags = squish::kDxt1;
-         else if (m_format == cDXT3)
-            squish_flags = squish::kDxt3;
-         else  if (m_format == cDXT5A)
-            squish_flags = squish::kDxt5A;
-         else
-            squish_flags = squish::kDxt5;
-
-         if (p.m_perceptual)
-            squish_flags |= squish::kColourMetricPerceptual;
-         else
-            squish_flags |= squish::kColourMetricUniform;
-
-         if (p.m_quality >= cCRNDXTQualityBetter)
-            squish_flags |= squish::kColourIterativeClusterFit;
-         else if (p.m_quality == cCRNDXTQualitySuperFast)
-            squish_flags |= squish::kColourRangeFit;
-
-         color_quad_u8 pixels[cDXTBlockSize * cDXTBlockSize];
-
-         memcpy(pixels, pPixels, sizeof(color_quad_u8) * cDXTBlockSize * cDXTBlockSize);
-
-         if (m_format == cDXT1)
-         {
-            for (uint i = 0; i < cDXTBlockSize * cDXTBlockSize; i++)
-               pixels[i].a = 255;
-         }
-         else if (m_format == cDXT1A)
-         {
-            for (uint i = 0; i < cDXTBlockSize * cDXTBlockSize; i++)
-               if (pixels[i].a < p.m_dxt1a_alpha_threshold)
-                  pixels[i].a = 0;
-               else
-                  pixels[i].a = 255;
-         }
-
-         squish::Compress(reinterpret_cast<const squish::u8*>(pixels), pElement, squish_flags);
-      }
-
-      else
-#endif // CRNLIB_SUPPORT_SQUISH
       // RYG doesn't support DXT1A
       if ((p.m_compressor == cCRNDXTCompressorRYG) && ((m_format == cDXT1) || (m_format == cDXT5) || (m_format == cDXT5A)))
       {

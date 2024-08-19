@@ -19,8 +19,6 @@
 
 #define CRNLIB_VERSION 105
 
-#define CRNLIB_SUPPORT_SQUISH 0
-
 typedef unsigned char   crn_uint8;
 typedef unsigned short  crn_uint16;
 typedef unsigned int    crn_uint32;
@@ -170,11 +168,6 @@ enum crn_dxt_compressor_type
    cCRNDXTCompressorCRN,      // Use crnlib's ETC1 or DXTc block compressor (default, highest quality, comparable or better than ati_compress or squish, and crnlib's ETC1 is a lot fasterw with similiar quality to Erricson's)
    cCRNDXTCompressorCRNF,     // Use crnlib's "fast" DXTc block compressor
    cCRNDXTCompressorRYG,      // Use RYG's DXTc block compressor (low quality, but very fast)
-
-#if CRNLIB_SUPPORT_SQUISH
-   cCRNDXTCompressorSquish,
-#endif
-
    cCRNTotalDXTCompressors,
 
    cCRNDXTCompressorForceDWORD = 0xFFFFFFFF
